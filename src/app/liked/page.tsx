@@ -11,7 +11,7 @@ async function getLiked() {
 
 /* eslint-disable @next/next/no-img-element */
 export default async function LikedPage() {
-  const liked: Challenge[] = await getLiked();
+  const liked: MinimalChallenge[] = await getLiked();
 
   return (
     <div className="flex flex-col gap-4 p-4">

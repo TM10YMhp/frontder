@@ -13,14 +13,24 @@ export async function GET(
   return NextResponse.json({ liked });
 }
 
+const toMinimalChallenge = (challenge: Challenge): MinimalChallenge => {
+  return {
+    title: challenge.title,
+    heroImage: challenge.heroImage,
+    id: challenge.id,
+    description: challenge.description,
+    slug: challenge.slug,
+  };
+};
+
 export async function POST(req: Request) {
   const { challenge } = await req.json();
 
   const cookieStore = await cookies();
   const data = cookieStore.get("liked")?.value ?? "[]";
-  const liked: Challenge[] = JSON.parse(data);
+  const liked: MinimalChallenge[] = JSON.parse(data);
   if (challenge && !liked.some((x) => x.id === challenge.id)) {
-    liked.push(challenge);
+    liked.push(toMinimalChallenge(challenge));
   }
   cookieStore.set("liked", JSON.stringify(liked));
   return NextResponse.json({ ok: true });
