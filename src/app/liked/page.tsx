@@ -15,7 +15,10 @@ export default async function LikedPage() {
 
   return (
     <div className="flex flex-col gap-4 p-4">
-      <Link href="/">Regresar</Link>
+      <Link href="/" className="underline">
+        {"<"} Regresar
+      </Link>
+
       <ul className="flex flex-col gap-2 max-w-2xl">
         {liked.map((challenge) => (
           <li key={challenge.id} className="flex items-center gap-4">
