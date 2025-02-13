@@ -14,9 +14,9 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <main className="px-8">
-          <p className="text-xl font-bold border-b py-2 text-center">
-            Frontend Mentor Challenges
+        <main className="px-8 max-w-7xl mx-auto">
+          <p className="text-xl font-bold border-b py-2 text-center mb-4">
+            Frontder | Frontend Mentor Web Scraping
           </p>
           {children}
         </main>

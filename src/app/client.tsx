@@ -105,7 +105,7 @@ export default function HomePageClient({ data }: { data: Challenge[] }) {
           href={"/liked"}
           className="rounded bg-gray-800 p-2 inline-grid place-content-center"
         >
-          Ver seleccion
+          Ver elecciones
         </Link>
       </div>
     </div>
