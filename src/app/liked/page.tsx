@@ -29,8 +29,8 @@ export default async function LikedPage() {
                 {challenge.description}
               </p>
               <a
-                target="_blank"
                 className="underline mt-2"
+                target="_blank"
                 rel="noopener noreferrer"
                 href={`https://frontendmentor.io/challenges/${challenge.slug}`}
               >

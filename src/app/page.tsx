@@ -42,7 +42,7 @@ export default async function Home() {
 
   return (
     <main>
-      <HomePageClient challenges={challenges} />
+      <HomePageClient data={challenges} />
 
       <ul className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
         {challenges.map((challenge) => (

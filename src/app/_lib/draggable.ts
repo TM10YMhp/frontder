@@ -19,12 +19,12 @@ export const startDrag = (event: MouseEvent | TouchEvent) => {
   // create icons
   const iconLike = document.createElement("i");
   iconLike.className =
-    "opacity-0 absolute top-5 text-green-500 text-5xl left-5 nf nf-fa-circle_check";
+    "opacity-0 absolute top-5 left-5 text-2xl leading-none bg-green-500 rounded-full w-fit h-fit p-2.5 nf nf-fa-check";
   actualCard.appendChild(iconLike);
 
   const iconNope = document.createElement("i");
   iconNope.className =
-    "opacity-0 absolute top-5 text-red-600 text-5xl right-5 nf nf-cod-error";
+    "opacity-0 absolute top-5 right-5 text-xl leading-none bg-red-600 rounded-full w-fit h-fit p-3 nf nf-fa-close";
   actualCard.appendChild(iconNope);
 
   // listen the mouse and touch movements
@@ -70,7 +70,7 @@ export const startDrag = (event: MouseEvent | TouchEvent) => {
     if (decisionMade) {
       const goRight = pullDeltaX >= 0;
 
-      actualCard.style.transition = "transform 0.3s ease, rotate 0.3s ease";
+      actualCard.style.transition = "transform 0.1s ease, rotate 0.1s ease";
       actualCard.style.transform = goRight
         ? "translateX(150%) rotate(30deg)" // go-right
         : "translateX(-150%) rotate(-30deg)"; // go-left
@@ -79,7 +79,7 @@ export const startDrag = (event: MouseEvent | TouchEvent) => {
       });
     } else {
       // reset position
-      actualCard.style.transition = "transform 0.3s ease";
+      actualCard.style.transition = "transform 0.1s ease";
       actualCard.style.transform = "translateX(0)";
       actualCard.style.cursor = "grab";
 
