@@ -1,52 +1,57 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { startDrag } from "./_lib/draggable";
 
+const postChallenge = async (challenge: Challenge) => {
+  const res = await fetch("http://localhost:3000/api/like", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ challenge }),
+  });
+  const data = await res.json();
+  return data;
+};
+
 /* eslint-disable @next/next/no-img-element */
 export default function HomePageClient({ data }: { data: Challenge[] }) {
-  const initialChallenges = data.toReversed();
+  const initialChallenges = data; //.toReversed();
   const [challenges, setChallenges] = useState<Challenge[]>(initialChallenges);
 
-  const router = useRouter();
+  const nextChallenge = () => {
+    setChallenges((x) => x.slice(1));
+  };
+
+  const handleLike = async () => {
+    await postChallenge(challenges[0]);
+    nextChallenge();
+  };
 
   useEffect(() => {
-    document.addEventListener("mousedown", startDrag);
-    document.addEventListener("touchstart", startDrag, { passive: true });
+    const listener = startDrag((liked) => {
+      if (liked) {
+        postChallenge(challenges[0]);
+      }
+      nextChallenge();
+    });
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener, { passive: true });
 
     return () => {
-      document.removeEventListener("mousedown", startDrag);
-      document.removeEventListener("touchstart", startDrag);
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
     };
-  }, []);
-
-  function handleDislike() {
-    setChallenges((challenges) => challenges.slice(1));
-  }
+  }, [challenges]);
 
   async function handleReset() {
     await fetch("http://localhost:3000/api/like", { method: "DELETE" });
     setChallenges(initialChallenges);
   }
 
-  function handleShowLiked() {
-    router.push("/liked");
-  }
-
-  async function handleLike() {
-    await fetch("http://localhost:3000/api/like", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ challenge: challenges[0] }),
-    });
-
-    setChallenges((x) => x.slice(1));
-  }
   return (
     <div className="flex flex-col gap-4 items-center select-none touch-none overflow-hidden">
       <div className="relative w-80 h-96">
-        {challenges.map((challenge) => (
+        {challenges.toReversed().map((challenge) => (
           <div
             key={challenge.id}
             className="absolute bg-gray-900 h-full rounded p-4 flex flex-col gap-4 cursor-grab"
@@ -87,7 +92,7 @@ export default function HomePageClient({ data }: { data: Challenge[] }) {
         </div>
       </div>
       <div className="grid grid-cols-2 grid-rows-2 gap-2">
-        <button className="rounded bg-red-600 p-2" onClick={handleDislike}>
+        <button className="rounded bg-red-600 p-2" onClick={nextChallenge}>
           <i className="nf nf-cod-error text-xl" /> No me gusta
         </button>
         <button className="rounded bg-green-600 p-2" onClick={handleLike}>
@@ -96,9 +101,12 @@ export default function HomePageClient({ data }: { data: Challenge[] }) {
         <button className="rounded bg-gray-800 p-2" onClick={handleReset}>
           Volver a empezar
         </button>
-        <button className="rounded bg-gray-800 p-2" onClick={handleShowLiked}>
+        <Link
+          href={"/liked"}
+          className="rounded bg-gray-800 p-2 inline-grid place-content-center"
+        >
           Ver seleccion
-        </button>
+        </Link>
       </div>
     </div>
   );
