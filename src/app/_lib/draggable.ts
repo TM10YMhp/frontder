@@ -73,8 +73,8 @@ export const startDrag = (cb: (liked: boolean) => void) => {
 
         actualCard.style.transition = "transform 0.1s ease, rotate 0.1s ease";
         actualCard.style.transform = goRight
-          ? "translateX(150%) rotate(30deg)" // go-right
-          : "translateX(-150%) rotate(-30deg)"; // go-left
+          ? "translateX(200%) rotate(30deg)" // go-right
+          : "translateX(-200%) rotate(-30deg)"; // go-left
         actualCard.addEventListener(
           "transitionend",
           () => {
