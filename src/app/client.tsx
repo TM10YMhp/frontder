@@ -3,6 +3,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { startDrag } from "./_lib/draggable";
 
+// https://github.com/vercel/next.js/issues/58242
+// https://github.com/vercel/next.js/pull/64725#pullrequestreview-2024729548
+import "core-js/features/array/to-reversed";
+
 const postChallenge = async (challenge: Challenge) => {
   const res = await fetch("http://localhost:3000/api/like", {
     method: "POST",
